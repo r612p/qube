@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QUBE | Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <script>
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
+  </script>
+
+  <main class="page-content">
+    <section>
+      <h2>Please give us your username</h2>
+      <p>and password</p>
+    </section>
+  </main>
+</body>
+</html>

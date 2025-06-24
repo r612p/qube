@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About QUBE</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Header Placeholder -->
+  <div id="header-placeholder"></div>
+
+  <!-- Inject header.html here -->
+  <script>
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
+  </script>
+
+  <!-- Main Content -->
+  <main style="max-width: 900px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px;">
+    <h2>About the QUBE Project</h2>
+    <p>
+      QUBE is a student-led initiative exploring the fascinating world of quantum computing.
+      We aim to make quantum education more accessible through visual tools, simulators, and tutorials.
+    </p>
+    <p>
+      Our team has built a quantum simulator using Java that allows users to test basic algorithms like
+      <strong>Shor's</strong> and <strong>Grover's</strong>. With QUBE, we want to spark curiosity and lower the barrier to entry into quantum science.
+    </p>
+    <h3>Our Goals</h3>
+    <ul>
+      <li>✅ Build intuitive quantum visualizations</li>
+      <li>✅ Publish open-source Java quantum simulator</li>
+      <li>🔄 Create community-led learning modules</li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Quantum Research Team</p>
+  </footer>
+
+</body>
+</html>
