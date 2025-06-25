@@ -1,17 +1,33 @@
+/* === BACKGROUND GRID AND GRADIENT === */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #16004d;
-  color: #333;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom right, #1a0841, #3f0f78);
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+  z-index: -1;
+}
+
+/* === MAIN DASHBOARD BOX === */
 .dashboard-container {
   max-width: 1000px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #f2f2f2;
+  margin: 60px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
   border-radius: 25px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  color: #fdf6f3;
 }
 
 header {
@@ -74,10 +90,11 @@ header {
 }
 
 .project-card {
-  background-color: #dce6ff;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
   padding: 20px;
   border-radius: 15px;
-  border: 2px solid #555;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -101,6 +118,7 @@ header {
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 .delete-btn {
@@ -111,51 +129,10 @@ header {
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-}
-
-.go-btn:hover {
-  background-color: green;
-}
-
-.delete-btn:hover {
-  background-color: darkred;
-}
-
-.project-card {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-button:hover {
-  transform: scale(1.05);
   transition: transform 0.2s ease;
 }
 
-.dashboard-container {
-  animation: fadeIn 1s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-body {
-  background-color: #16004d;
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: center;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(to bottom right, #1a0841, #3f0f78);
-  z-index: -1;
+.go-btn:hover,
+.delete-btn:hover {
+  transform: scale(1.05);
 }
