@@ -1,0 +1,161 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #16004d;
+  color: #333;
+}
+
+.dashboard-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #f2f2f2;
+  border-radius: 25px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #000;
+}
+
+.dashboard-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.lesson-progression {
+  flex: 1;
+  min-width: 300px;
+}
+
+.lesson-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lesson-node {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  background: cyan;
+  border: 3px solid #000;
+  border-radius: 50%;
+}
+
+.line {
+  width: 4px;
+  height: 30px;
+  background-color: cyan;
+  margin: 10px 0;
+}
+
+.project-section {
+  flex: 1;
+  min-width: 300px;
+}
+
+.project-card {
+  background-color: #dce6ff;
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #555;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.project-name {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.project-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.go-btn {
+  background-color: limegreen;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: crimson;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.go-btn:hover {
+  background-color: green;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+button:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.dashboard-container {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  background-color: #16004d;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom right, #1a0841, #3f0f78);
+  z-index: -1;
+}

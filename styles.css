@@ -184,7 +184,7 @@
     flex-wrap: nowrap;        /* prevent buttons from wrapping */
   }
   
-  .trynow-btn, .updatelog-btn, .signup-btn, .login-btn{
+  .trynow-btn, .updatelog-btn, .signup-btn, .login-btn, .logoutBtn{
     flex: none;               /* prevent buttons from growing/shrinking */
     padding: 20px 48px;
     font-size: 1rem;
@@ -197,7 +197,7 @@
     transition: 0.3s ease;
   }
   
-  .signup-btn:hover, .login-btn:hover {
+  .signup-btn:hover, .login-btn:hover, .logoutBtn{
     box-shadow: 0 0 16px #e250ff;
     transform: translateY(-5px);
   }
