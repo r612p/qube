@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QUBE | Research</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="dashstyle" href="dashboard.css"/>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 </head>
 <body>
   <div id="header-placeholder"></div>
@@ -18,60 +22,16 @@
       });
   </script>  
 
-          <button id="logoutBtn">Logout</button>
-         
-
-          <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"> //logout functionality </script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyB794_xhBGp4BTo5ufdv06AKZZ6gczsvLQ",
-    authDomain: "qube-f0452.firebaseapp.com",
-    projectId: "qube-f0452",
-    storageBucket: "qube-f0452.appspot.com",
-    messagingSenderId: "241392091913",
-    appId: "1:241392091913:web:dfc43ac9129ff75c4789d8",
-    measurementId: "G-5V1JYVBWJQ"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-</script>
-<script>
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    auth.signOut().then(() => {
-      // After logout, redirect to login page
-      window.location.href = "login.html";
-    }).catch((error) => {
-      console.error('Logout error:', error);
-    });
-  });
-
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      // Not logged in — redirect to login
-      window.location.href = "login.html";
-    } else {
-      // Logged in — show name and profile pic
-      const name = user.displayName;
-      const photoURL = user.photoURL;
-
-      document.getElementById("userName").textContent = name || "User";
-      if (photoURL) {
-        document.getElementById("profilePic").src = photoURL;
-      }
-    }
-  });
-</script>
-
-
   <!-- Background Grid Layer -->
   <div class="grid-bg"></div>
 
   <!-- Your main dashboard content -->
   <div class="dashboard-container">
     <header>
-        <img id="profilePic" src="default-pfp.png" alt="Profile Picture" width="80" style="border-radius: 50%;">
-<h2>Welcome, <span id="userName">[name]</span></h2>
+      <img id="profilePic" src="default-pfp.png" alt="Profile Picture" width="80" style="border-radius: 50%;" />
+      <h2>Welcome, <span id="userName">[name]</span></h2>
+      <!-- Logout button added here -->
+      <button id="logoutBtn" style="margin-left: 20px; padding: 8px 16px; cursor: pointer;">Logout</button>
     </header>
 
     <main class="dashboard-content">
@@ -107,5 +67,43 @@
       </section>
     </main>
   </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB794_xhBGp4BTo5ufdv06AKZZ6gczsvLQ",
+      authDomain: "qube-f0452.firebaseapp.com",
+      projectId: "qube-f0452",
+      storageBucket: "qube-f0452.appspot.com",
+      messagingSenderId: "241392091913",
+      appId: "1:241392091913:web:dfc43ac9129ff75c4789d8",
+      measurementId: "G-5V1JYVBWJQ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        // Not logged in — redirect to login
+        window.location.href = "login.html";
+      } else {
+        // Logged in — update UI
+        const name = user.displayName || "User";
+        const photoURL = user.photoURL || "default-pfp.png";
+
+        document.getElementById("userName").textContent = name;
+        document.getElementById("profilePic").src = photoURL;
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      auth.signOut()
+        .then(() => {
+          window.location.href = "login.html";
+        })
+        .catch(error => {
+          console.error('Logout error:', error);
+        });
+    });
+  </script>
 </body>
 </html>
