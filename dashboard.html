@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>QUBE | Research</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="dashstyle" href="dashboard.css"/>
 </head>
 <body>
   <div id="header-placeholder"></div>
@@ -45,16 +46,35 @@
     });
   });
 
-auth.onAuthStateChanged(user => {
-  if (!user) {
-    window.location.href = "login.html";
-  }
-});
-git 
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      // Not logged in — redirect to login
+      window.location.href = "login.html";
+    } else {
+      // Logged in — show name and profile pic
+      const name = user.displayName;
+      const photoURL = user.photoURL;
 
+      document.getElementById("userName").textContent = name || "User";
+      if (photoURL) {
+        document.getElementById("profilePic").src = photoURL;
+      }
+    }
+  });
 </script>
 
-  <main class="dashboard-content">
+
+  <!-- Background Grid Layer -->
+  <div class="grid-bg"></div>
+
+  <!-- Your main dashboard content -->
+  <div class="dashboard-container">
+    <header>
+        <img id="profilePic" src="default-pfp.png" alt="Profile Picture" width="80" style="border-radius: 50%;">
+<h2>Welcome, <span id="userName">[name]</span></h2>
+    </header>
+
+    <main class="dashboard-content">
       <section class="lesson-progression">
         <h2>Lesson Progression</h2>
         <div class="lesson-track">
