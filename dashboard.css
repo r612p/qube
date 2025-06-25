@@ -159,3 +159,24 @@ header {
 .delete-btn:hover {
   transform: scale(1.05);
 }
+
+
+.logout-btn {
+  margin-left: 20px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #41acdd, #270070);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.logout-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #1b1db6, #00ffff);
+}
