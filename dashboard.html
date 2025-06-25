@@ -17,7 +17,45 @@
       });
   </script>
 
-          
+          <button id="logoutBtn">Logout</button>
+          // logout functionality
+
+          <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB794_xhBGp4BTo5ufdv06AKZZ6gczsvLQ",
+    authDomain: "qube-f0452.firebaseapp.com",
+    projectId: "qube-f0452",
+    storageBucket: "qube-f0452.appspot.com",
+    messagingSenderId: "241392091913",
+    appId: "1:241392091913:web:dfc43ac9129ff75c4789d8",
+    measurementId: "G-5V1JYVBWJQ"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+</script>
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    auth.signOut().then(() => {
+      // After logout, redirect to login page
+      window.location.href = "login.html";
+    }).catch((error) => {
+      console.error('Logout error:', error);
+    });
+  });
+
+auth.onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
+
+
+</script>
+
+
+
 
   </main>
 </body>

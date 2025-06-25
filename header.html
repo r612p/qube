@@ -24,4 +24,36 @@
 
       </div>
     </div>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB794_xhBGp4BTo5ufdv06AKZZ6gczsvLQ",
+    authDomain: "qube-f0452.firebaseapp.com",
+    projectId: "qube-f0452",
+    storageBucket: "qube-f0452.appspot.com",
+    messagingSenderId: "241392091913",
+    appId: "1:241392091913:web:dfc43ac9129ff75c4789d8",
+    measurementId: "G-5V1JYVBWJQ"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      // Change the login button to dashboard link
+      const authLink = document.getElementById('authLink');
+      const authBtn = document.getElementById('authBtn');
+      if (authLink && authBtn) {
+        authLink.href = "dashboard.html";
+        authBtn.textContent = "Dashboard";
+      }
+    }
+  });
+</script>
+
+
     </header>

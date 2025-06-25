@@ -58,7 +58,7 @@
     const welcomeMsg = document.getElementById('welcomeMsg');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    // 🔐 Handle login
+    // Handle login
     loginBtn.addEventListener('click', () => {
       auth.signInWithPopup(provider)
         .then(result => {
@@ -72,7 +72,7 @@
         });
     });
 
-    // 🔐 Handle logout
+    // Handle logout
     logoutBtn.addEventListener('click', () => {
       auth.signOut().then(() => {
         userInfo.style.display = 'none';
@@ -80,14 +80,19 @@
       });
     });
 
-    // ✅ Auto-detect login state (refresh-safe)
+    //9 Auto-detect login state (refresh-safe)
     auth.onAuthStateChanged(user => {
-      if (user) {
-        welcomeMsg.textContent = `Welcome, ${user.displayName}`;
-        userInfo.style.display = 'block';
-        loginBtn.style.display = 'none';
-      }
-    });
+  if (user) {
+    // Redirect logged-in users to dashboard
+    window.location.href = "dashboard.html";
+  } else {
+    // User is signed out — show login UI
+    welcomeMsg.textContent = "";
+    userInfo.style.display = 'none';
+    loginBtn.style.display = 'inline-block';
+  }
+});
+
   </script>
 </body>
 </html>
