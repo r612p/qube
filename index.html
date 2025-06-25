@@ -11,16 +11,34 @@
   <div id="header-placeholder"></div>
 
   <!-- Inject header.html here -->
-  <script>
-    fetch("header.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("header-placeholder").innerHTML = data;
+ <!-- Load header and update auth button -->
+<script>
+  fetch("header.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("header-placeholder").innerHTML = data;
+
+      // Firebase auth check (wait briefly for header to render)
+      firebase.auth().onAuthStateChanged(user => {
+        const authLink = document.getElementById("authLink");
+        const authBtn = document.getElementById("authBtn");
+
+        if (authLink && authBtn) {
+          if (user) {
+            authLink.href = "dashboard.html";
+            authBtn.textContent = "Dashboard";
+          } else {
+            authLink.href = "login.html";
+            authBtn.textContent = "Log In";
+          }
+        }
       });
-  </script>
+    });
+</script>
+
       
       <div class="top-section">
-        <section class="quantum-blurb">
+        <section class="quantum-blurb fade-in-left">
             <div class="blurb-content">
               <h2>Learn Quantum Computing Today</h2>
               <p class="blurb-description">With the help of our QUBE Java Quantum Simulator</p> <!-- ← new line added -->
@@ -35,7 +53,7 @@
             </div>
           </section>
       
-        <div class="right-image">
+        <div class="right-image fade-in-left">
           <img src="quamtumcomputer.png" alt="Quantum Computing Illustration" />
         </div>
       </div>
@@ -62,7 +80,7 @@
       
 
       <div class="bottom-section">
-        <section class="quantum-blurb mirrored-blurb">
+        <section class="quantum-blurb mirrored-blurb fade-in-right">
           <div class="blurb-content">
             <h2>Try Our Online Integrated Qubit Circut Simulator!</h2>
             <p class="blurb-description">Still Work in Progress, Supports Multiple Qubits, Circuts, and a Wide Variety of Single Qubit Quantum Gates</p>
@@ -73,33 +91,54 @@
           </div>
         </section>
       
-        <div class="left-image">
+        <div class="left-image fade-in-right">
           <img src="whatisthis2.png" alt="Different Quantum Illustration" />
         </div>
       </div>
       
-      
+      <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, {
+      threshold: 0.5 // adjust as needed for when it should trigger
+    });
+
+    document.querySelectorAll('.fade-in-right').forEach(el => {
+      observer.observe(el);
+    });
+  });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, {
+      threshold: 0.5 // adjust as needed for when it should trigger
+    });
+
+    document.querySelectorAll('.fade-in-left').forEach(el => {
+      observer.observe(el);
+    });
+  });
+
+</script>
+
 
     <main>
-        <section id="about">
-            <h2>About the Project</h2>
-            <p>This project explores the potential of quantum algorithms and simulators. Our main goal is to implement and test basic quantum circuits, such as those used in Shor's and Grover's algorithms, using Java-based simulators.</p>
-        </section>
-
-        <section id="team">
-            <h2>Our Team</h2>
-            <p>We are a group of high school students with a passion for quantum computing and computer science.</p>
-        </section>
-
-        <section id="progress">
-            <h2>Project Progress</h2>
-            <ul>
-                <li>✅ Researched quantum gates and circuits</li>
-                <li>✅ Developed a basic quantum simulator in Java</li>
-                <li>🔄 Implementing Shor's Algorithm</li>
-            </ul>
-        </section>
-
+     
         <section id="resources">
             <h2>Helpful Resources</h2>
             <ul>
@@ -118,5 +157,8 @@
     <footer>
         <p>&copy; 2025 Quantum Research Team</p>
     </footer>
+
+
+
 </body>
 </html>

@@ -305,9 +305,7 @@ function setResultOutput(message) {
 
 const outputEl = document.getElementById('output');
 const qubitListEl = document.getElementById('qubit-list');
-let selectedQubitId = null;  // To store the ID of the selected qubit
-
-// Function to create a new qubit and add it to the UI
+let selectedQubitId = null;  // store ID
 document.getElementById('create-qubit-btn').addEventListener('click', () => {
   const a = document.getElementById('input-a').value.trim();
   const b = document.getElementById('input-b').value.trim();

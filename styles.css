@@ -385,3 +385,32 @@ footer {
     color: #444;
     border-top: 1px solid #ccc;
 }
+
+/* Hidden state */
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s ease-out;
+}
+
+/* Visible state on scroll */
+.fade-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* Hidden state */
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s ease-out;
+}
+
+/* Visible state on scroll */
+.fade-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
