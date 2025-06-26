@@ -145,7 +145,7 @@ header {
 }
 
 .delete-btn {
-  background-color: crimson;
+  background-color: rgb(153, 0, 255);
   color: white;
   padding: 10px 20px;
   border: none;
