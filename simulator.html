@@ -5,170 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QUBE Simulator</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Existing styles - kept identical */
-    .container {
-      max-width: 1200px;
-      margin: 30px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      margin-bottom: 10px;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 12px;
-    }
-
-    .input-row div {
-      flex: 1;
-    }
-
-    label {
-      font-weight: bold;
-      font-size: 0.9rem;
-      display: block;
-      margin-bottom: 6px;
-      color: #1a1a2e;
-    }
-
-    input[type="text"] {
-      padding: 8px;
-      width: 100%;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    .buttons {
-      margin-bottom: 20px;
-    }
-
-    button {
-      padding: 10px 28px;
-      font-size: 1rem;
-      background-color: #00f0ff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      color: #1a1a2e;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-      margin-right: 15px;
-    }
-
-    button:hover {
-      background-color: #00c4cc;
-    }
-
-    #output {
-      white-space: pre-wrap;
-      background: #f0f8ff;
-      border-radius: 6px;
-      padding: 15px;
-      min-height: 100px;
-      font-family: monospace;
-      color: #1a1a2e;
-      border: 1px solid #ccc;
-    }
-
-    .qubit-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 20px;
-      background: #fafafa;
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    .qubit-item {
-      padding: 10px;
-      background-color: #e6f7ff;
-      border-radius: 6px;
-      border: 1px solid #cce7ff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .qubit-item:hover {
-      background-color: #f0f0f0;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .glow {
-      box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-      border: 2px solid green;
-    }
-
-    /* New style for parameter displays */
-    .param-display {
-      padding: 8px;
-      background: white;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-      font-family: monospace;
-      color: #333;
-      font-size: 0.95rem;
-      text-align: center;
-    }
-
-    .param-label {
-      color: #666;
-      font-size: 0.85rem;
-      margin-top: 4px;
-    }
-
-    #log-container {
-      display: flex;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    #execution-log {
-      flex: 1;
-      height: 200px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      overflow-y: auto;
-      background-color: #f0f0f0;
-      font-family: monospace;
-      white-space: pre-line;
-      border-radius: 8px;
-    }
-
-    #result-output {
-      flex: 1;
-      height: 200px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      overflow-y: auto;
-      background-color: #fff;
-      font-family: monospace;
-      font-weight: bold;
-      white-space: pre-line;
-      border-radius: 8px;
-    }
-
-    #clear-log-btn {
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-  </style>
 </head>
 <body>
   <!-- Header placeholder -->
@@ -355,5 +191,118 @@
       resultOutputEl.textContent = '';
     });
   </script>
+
+
+
+
+
+<div class="grid-bg"></div>
+
+  <!-- Your main dashboard content -->
+  <div class="container">
+    <h2>Quantum Circut Simulator</h2>
+
+  <button id="btn-add-qubit" class="btn-add">Add qubit</button>
+  <button id="btn-confirm" class="btn-add" disabled>Confirm list</button>
+  <div class="added1-container">
+  <div id="qubit-list2">Qubits:</div>
+</div>
+  <div id="gate-bar">
+    <span class="gate" draggable="true" data-gate="X">X</span>
+    <span class="gate" draggable="true" data-gate="Y">Y</span>
+    <span class="gate" draggable="true" data-gate="Z">Z</span>
+    <span class="gate" draggable="true" data-gate="Hadamard">H</span>
+    <span class="gate" draggable="true" data-gate="S">S</span>
+    <span class="gate" draggable="true" data-gate="T">T</span>
+    <span class="gate" draggable="true" data-gate="SDagger">Sd</span>
+    <span class="gate" draggable="true" data-gate="TDagger">Td</span>
+  </div>
+
+  <div id="grid-container"></div>
+
+  <button id="btn-exec" class="btn" disabled>Execute</button>
+  <div id="output"></div>
+
+  <script>
+    let qubits = [], workspace = [], confirmed = false, layers = 2;
+    
+    document.getElementById('btn-add-qubit').onclick = () => {
+      if (confirmed) return;
+      const name = `qu${qubits.length+1}`;
+      qubits.push(name);
+      document.getElementById('qubit-list2').innerText = 'Qubits: ' + qubits.join(', ');
+      document.getElementById('btn-confirm').disabled = false;
+    };
+
+    document.getElementById('btn-confirm').onclick = () => {
+      confirmed = true;
+      document.getElementById('btn-confirm').disabled = true;
+      buildGrid();
+    };
+
+    document.getElementById('gate-bar').querySelectorAll('.gate').forEach(g=>{
+      g.addEventListener('dragstart', e=>{
+        e.dataTransfer.setData('gate', g.dataset.gate);
+      });
+    });
+
+    function buildGrid() {
+      workspace = qubits.map(()=> Array(layers).fill(''));
+      renderGrid();
+    }
+
+    function renderGrid() {
+      const container = document.getElementById('grid-container');
+      container.innerHTML = '';
+      const table = document.createElement('table');
+      const header = document.createElement('tr');
+      header.innerHTML = '<th></th>' + workspace[0].map((_,c)=>
+        `<th>Layer ${c+1}</th>`).join('');
+      header.innerHTML += `<th id="layers-add" rowspan="${workspace.length+1}">+</th>`;
+      table.appendChild(header);
+      workspace.forEach((row, r) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<th>${qubits[r]}</th>` + row.map((gate,c)=>
+          `<td class="cell" data-r="${r}" data-c="${c}">${gate}</td>`
+        ).join('');
+        table.appendChild(tr);
+      });
+      container.appendChild(table);
+
+      container.querySelectorAll('td.cell').forEach(td=>{
+        td.addEventListener('dragover', e=>{ e.preventDefault(); td.classList.add('drag-over'); });
+        td.addEventListener('dragleave', ()=>td.classList.remove('drag-over'));
+        td.addEventListener('drop', e=>{
+          e.preventDefault(); td.classList.remove('drag-over');
+          workspace[td.dataset.r][td.dataset.c] = e.dataTransfer.getData('gate');
+          renderGrid();
+          document.getElementById('btn-exec').disabled = false;
+        });
+      });
+
+      document.getElementById('layers-add').onclick = () => {
+        layers++;
+        workspace.forEach(row=>row.push(''));
+        renderGrid();
+      };
+    }
+
+    document.getElementById('btn-exec').onclick = () => {
+      const payload = { qubits, gates: workspace };
+      fetch('https://your-backend/execute-circuit', {
+        method: 'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      })
+      .then(r=>r.text())
+      .then(txt=>document.getElementById('output').innerText = txt)
+      .catch(e=>document.getElementById('output').innerText = e.message);
+    };
+  </script>
+
+
+
+
+  
 </body>
 </html>
