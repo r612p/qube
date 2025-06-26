@@ -1,223 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>QUBE Simulator</title>
-  <link rel="stylesheet" href="styles.css" />
+  <!-- ... (keep all meta tags and title the same) ... -->
   <style>
-    /* Existing styles */
-    .container {
-      max-width: 1200px;
-      margin: 30px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      margin-bottom: 10px;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 12px;
-    }
-
-    .input-row div {
-      flex: 1;
-    }
-
-    label {
-      font-weight: bold;
-      font-size: 0.9rem;
-      display: block;
-      margin-bottom: 6px;
-      color: #1a1a2e;
-    }
-
-    input[type="text"] {
+    /* ... (keep all existing styles the same) ... */
+    
+    /* Add this new style for parameter display */
+    .parameter-display {
       padding: 8px;
-      width: 100%;
+      background-color: #f5f5f5;
       border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    .buttons {
-      margin-bottom: 20px;
-    }
-
-    button {
-      padding: 10px 28px;
-      font-size: 1rem;
-      background-color: #00f0ff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      color: #1a1a2e;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-      margin-right: 15px;
-    }
-
-    button:hover {
-      background-color: #00c4cc;
-    }
-
-    #output {
-      white-space: pre-wrap;
-      background: #f0f8ff;
-      border-radius: 6px;
-      padding: 15px;
-      min-height: 100px;
+      border: 1px solid #ddd;
       font-family: monospace;
-      color: #1a1a2e;
-      border: 1px solid #ccc;
+      margin-bottom: 6px;
     }
-
-   .qubit-list {
-  display: grid;                  /* Using grid layout for qubits */
-  grid-template-columns: repeat(3, 1fr);  /* Display qubits in 3 equal-width columns */
-  gap: 20px;                      /* Add space between the qubits */
-  margin-top: 20px;
-  background: #fafafa;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.qubit-item {
-  padding: 10px;
-  background-color: #e6f7ff;
-  border-radius: 6px;
-  border: 1px solid #cce7ff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.qubit-item:hover {
-  background-color: #f0f0f0; /* Change background color on hover */
-}
-
-
-    .qubit-item {
-      margin-bottom: 15px;
-      padding: 10px;
-      background-color: #e6f7ff;
-      border-radius: 6px;
-      border: 1px solid #cce7ff;
-    }
-
- .glow {
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);  /* Green glow effect */
-    border: 2px solid green;
-  }
-
-  .qubit-item {
-    cursor: pointer;
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid #ccc;
-  }
-
-  .qubit-item:hover {
-    background-color: #f0f0f0;
-  }
-
-
-#output {
-  width: 100%;                /* or any fixed width like 400px */
-  height: 200px;              /* Set a fixed height */
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-top: 10px;
-  overflow-y: auto;           /* Enables vertical scroll */
-  white-space: pre-line;      /* Preserves line breaks in logs */
-  background-color: #f9f9f9;  /* Optional: for readability */
-  font-family: monospace;     /* Optional: for log-like appearance */
-}
-
-
-
-#log-container {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-/* Left log (Execution log with timestamp) */
-#execution-log {
-  flex: 1;
-  height: 200px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  overflow-y: auto;
-  background-color: #f0f0f0;
-  font-family: monospace;
-  white-space: pre-line;
-  border-radius: 8px;  /* Added for slight curve */
-}
-
-/* Right log (Just result/output) */
-#result-output {
-  flex: 1;
-  height: 200px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  overflow-y: auto;
-  background-color: #fff;
-  font-family: monospace;
-  font-weight: bold;
-  white-space: pre-line;
-  border-radius: 8px;  /* Added for slight curve */
-}
-
-
-
-#log-container h4 {
-  margin-bottom: 8px;
-  font-size: 1.1rem;
-  color: #1a1a2e;
-}
-
-/* Log container with two panes (execution log and result output) */
-#log-container {
-  display: flex;
- 
-  margin-bottom: 10spx; /* Added margin bottom for the gap */
-}
-
-/* Clear Logs button */
-#clear-log-btn {
-  margin-top: 10px; /* Add a gap between the logs and the button */
-  margin-bottom: 10px;
-}
-
-
   </style>
 </head>
 <body>
-
-  <!-- Header placeholder -->
+  <!-- Header placeholder (keep this the same) -->
   <div id="header-placeholder"></div>
-
-  <script>
-    fetch("header.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("header-placeholder").innerHTML = data;
-      })
-      .catch(err => console.error("Error loading header:", err));
-  </script>
 
   <div class="container">
     <h2>Quantum Simulator</h2>
@@ -232,252 +33,115 @@
     <div class="input-group">
       <div class="input-row">
         <div>
-          <label for="input-a">Parameter A (Real)</label>
-          <input type="text" id="input-a" placeholder="e.g. 1.0" />
+          <label>Parameter A (Real)</label>
+          <div class="parameter-display">0.0 (default)</div>
         </div>
         <div>
-          <label for="input-b">Parameter A (Imag)</label>
-          <input type="text" id="input-b" placeholder="e.g. 0.5" />
+          <label>Parameter A (Imag)</label>
+          <div class="parameter-display">0.0 (default)</div>
         </div>
       </div>
 
       <div class="input-row">
         <div>
-          <label for="input-c">Parameter B (Real)</label>
-          <input type="text" id="input-c" placeholder="e.g. 0.2" />
+          <label>Parameter B (Real)</label>
+          <div class="parameter-display">0.0 (default)</div>
         </div>
         <div>
-          <label for="input-d">Parameter B (Imag)</label>
-          <input type="text" id="input-d" placeholder="e.g. 0.8" />
+          <label>Parameter B (Imag)</label>
+          <div class="parameter-display">1.0 (default)</div>
         </div>
       </div>
     </div>
 
-    <div class="buttons">
-      <button id="create-qubit-btn">Create Qubit</button>
-      <button id="execute-btn">Execute</button>
-    </div>
-
-    <!--  LOG CONTAINER WITH TWO PANES -->
-<div id="log-container">
-  <div style="flex: 1;">
-    <h4>Execution Log</h4>
-    <div id="execution-log"></div>
-  </div>
-  <div style="flex: 1;">
-    <h4>Qubit Result</h4>
-    <div id="result-output"></div>
-  </div>
-</div>
-
-    <!-- 🔘 Optional: clear logs button -->
-    <button id="clear-log-btn">Clear Logs</button>
-<h3>Created Qubits:</h3>
-    <!-- Display created qubits here -->
-    <div class="qubit-list" id="qubit-list">
-    
-      <!-- Qubits will be added here dynamically -->
-    </div>
+    <!-- ... (keep buttons, log container, and qubit list the same) ... -->
   </div>
 
-
-
-
-
-
-  
   <script>
+    // ... (keep header fetch script the same) ...
 
-const executionLogEl = document.getElementById('execution-log');
-const resultOutputEl = document.getElementById('result-output');
+    const executionLogEl = document.getElementById('execution-log');
+    const resultOutputEl = document.getElementById('result-output');
+    const qubitListEl = document.getElementById('qubit-list');
+    let selectedQubitId = null;
+    let selectedQubitElement = null;
 
-function appendLog(message) {
-  const timestamp = new Date().toLocaleString();
-  executionLogEl.textContent += `[${timestamp}] ${message}\n`;
-  executionLogEl.scrollTop = executionLogEl.scrollHeight;
-}
+    // ... (keep appendLog and setResultOutput functions the same) ...
 
-function setResultOutput(message) {
-  resultOutputEl.textContent = message;
-}
+    document.getElementById('create-qubit-btn').addEventListener('click', () => {
+      const id = document.getElementById('qubit-name').value.trim();
 
+      if (!id) {
+        alert("Please enter a Qubit Name.");
+        return;
+      }
 
+      if (isQubitNameExists(id)) {
+        alert("A qubit with this name already exists. Please choose a different name.");
+        return;
+      }
 
-const outputEl = document.getElementById('output');
-const qubitListEl = document.getElementById('qubit-list');
-let selectedQubitId = null;  // store ID
-document.getElementById('create-qubit-btn').addEventListener('click', () => {
-  const a = document.getElementById('input-a').value.trim();
-  const b = document.getElementById('input-b').value.trim();
-  const c = document.getElementById('input-c').value.trim();
-  const d = document.getElementById('input-d').value.trim();
-  const id = document.getElementById('qubit-name').value.trim();
+      // Use fixed default values (0,0,0,1)
+      const payload = {
+        id: id,
+        aReal: 0,
+        aImag: 0,
+        bReal: 0,
+        bImag: 1
+      };
 
-  if (!a || !b || !c || !d || !id) {
-    alert("Please fill all fields including Qubit Name.");
-    return;
-  }
+      appendLog(`Attempting to create qubit with ID: ${id}`);
 
-  if (isQubitNameExists(id)) {
-    alert("A qubit with this name already exists. Please choose a different name.");
-    return;
-  }
+      fetch("https://qube-simulator.onrender.com/create-qubit", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.text())
+      .then(data => {
+        if (data.includes("created successfully")) {
+          addQubitToUI(id);
+          appendLog(`Qubit '${id}' created successfully.`);
+        } else {
+          appendLog(`Error: ${data}`);
+        }
+      })
+      .catch(err => {
+        appendLog(`Error: ${err.message}`);
+      });
+    });
 
-  const payload = {
-    id: id,
-    aReal: parseFloat(a),
-    aImag: parseFloat(b),
-    bReal: parseFloat(c),
-    bImag: parseFloat(d)
-  };
-
-  appendLog(`Attempting to create qubit with ID: ${id}`);
-
-  fetch("https://qube-simulator.onrender.com/create-qubit", {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .then(res => res.text())
-  .then(data => {
-    if (data.includes("created successfully")) {
-      addQubitToUI(id, a, b, c, d);
-      appendLog(`Qubit '${id}' created successfully.`);
-    } else {
-      appendLog(`Error: ${data}`);
+    function isQubitNameExists(id) {
+      return document.querySelector(`[data-id='${id}']`) !== null;
     }
-  })
-  .catch(err => {
-    appendLog(`Error: ${err.message}`);
-  });
-});
 
+    function addQubitToUI(id) {
+      const qubitDiv = document.createElement("div");
+      qubitDiv.className = "qubit-item";
+      qubitDiv.setAttribute("data-id", id);
+      qubitDiv.innerHTML = `
+        <p><strong>Qubit Name:</strong> ${id}</p>
+        <p><strong>Alpha:</strong> 0 + 0i</p>
+        <p><strong>Beta:</strong> 0 + 1i</p>
+        <button class="delete-btn">Delete</button>
+      `;
 
-// Function to check if the qubit name already exists in the UI list
-function isQubitNameExists(id) {
-  const qubitItems = document.querySelectorAll('.qubit-item');
-  for (let item of qubitItems) {
-    const qubitName = item.querySelector('p strong').nextSibling.textContent.trim();
-    if (qubitName === id) {
-      return true; // Name exists
+      qubitDiv.querySelector(".delete-btn").addEventListener("click", () => {
+        deleteQubit(id, qubitDiv);
+      });
+
+      qubitDiv.addEventListener("click", () => {
+        if (selectedQubitElement) selectedQubitElement.classList.remove('glow');
+        selectedQubitId = id;
+        selectedQubitElement = qubitDiv;
+        qubitDiv.classList.add('glow');
+        document.getElementById('qubit-name').value = id;
+      });
+
+      qubitListEl.appendChild(qubitDiv);
     }
-  }
-  return false; // Name doesn't exist
-}
 
-// Add the created qubit to the UI list
-// Add the created qubit to the UI list
-function addQubitToUI(id, aReal, aImag, bReal, bImag) {
-  const qubitDiv = document.createElement("div");
-  qubitDiv.classList.add("qubit-item");
-  qubitDiv.setAttribute("data-id", id); // Set the data-id attribute for identification
-
-  qubitDiv.innerHTML = `
-    <p><strong>Qubit Name:</strong> ${id}</p>
-    <p><strong>Alpha:</strong> ${aReal} + ${aImag}i</p>
-    <p><strong>Beta:</strong> ${bReal} + ${bImag}i</p>
-    <button class="delete-btn">Delete</button>
-  `;
-
-  // Add the delete button functionality
-  const deleteButton = qubitDiv.querySelector('.delete-btn');
-  deleteButton.addEventListener('click', () => {
-    deleteQubit(id, qubitDiv);
-  });
-
-  // Add click event for selecting the qubit
-  qubitDiv.addEventListener('click', () => {
-    selectQubit(id, aReal, aImag, bReal, bImag);
-  });
-
-  qubitListEl.appendChild(qubitDiv);
-}
-
-
-let selectedQubitElement = null; // To store the currently selected qubit div
-
-// Function to handle the selection of a qubit
-function selectQubit(id, aReal, aImag, bReal, bImag) {
-  // Store the selected qubit's ID
-  selectedQubitId = id;
-
-  // If there's already a selected qubit, remove the glowing effect
-  if (selectedQubitElement !== null) {
-    selectedQubitElement.classList.remove('glow');
-  }
-
-  // Find the clicked qubit element and add the glow effect
-  const qubitDiv = document.querySelector(`[data-id='${id}']`);
-  qubitDiv.classList.add('glow');
-
-  // Store the reference to the currently selected qubit element
-  selectedQubitElement = qubitDiv;
-
-  // Fill the input fields with the qubit's parameters
-  document.getElementById('qubit-name').value = id;
-  document.getElementById('input-a').value = aReal;
-  document.getElementById('input-b').value = aImag;
-  document.getElementById('input-c').value = bReal;
-  document.getElementById('input-d').value = bImag;
-}
-
-
-// Delete the qubit both from the UI and the backend
-function deleteQubit(id, qubitDiv) {
-  appendLog(`Attempting to delete qubit with ID: ${id}`);
-
-  // Remove the qubit from the UI
-  qubitListEl.removeChild(qubitDiv);
-
-  fetch("https://qube-simulator.onrender.com/delete-qubit", {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: id })
-  })
-  .then(res => res.text())
-  .then(data => {
-    if (data.includes("deleted successfully")) {
-      appendLog(`Qubit '${id}' deleted successfully.`);
-    } else {
-      appendLog(`Error deleting qubit: ${data}`);
-    }
-  })
-  .catch(err => {
-    appendLog(`Error deleting qubit: ${err.message}`);
-  });
-}
-
-
-// EXECUTE QUBIT when the "Execute" button is clicked
-document.getElementById('execute-btn').addEventListener('click', () => {
-  if (selectedQubitId === null) {
-    alert("Please select a qubit from the list.");
-    return;
-  }
-
-  appendLog(`Attempting to execute qubit with ID: ${selectedQubitId}`);
-fetch("https://qube-simulator.onrender.com/execute", {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ id: selectedQubitId })
-})
-.then(res => res.text())
-.then(data => {
-  appendLog(`Executed Qubit '${selectedQubitId}'`);
-  setResultOutput(data); // Show only the raw result in the right box
-})
-  .catch(err => {
-    appendLog(`Error executing qubit: ${err.message}`);
-  });
-}); // ← ✅ This closes the execute button event listener
-
-
-
-// Clear both logs
-document.getElementById('clear-log-btn').addEventListener('click', () => {
-  executionLogEl.textContent = '';
-  resultOutputEl.textContent = '';
-});
-
-
-</script>
+    // ... (keep deleteQubit, execute button, and clear logs functions the same) ...
+  </script>
+</body>
+</html>
