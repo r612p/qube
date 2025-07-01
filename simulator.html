@@ -108,7 +108,7 @@ document.getElementById('create-qubit-btn').addEventListener('click', () => {
   const d = 1;
   const id = document.getElementById('qubit-name').value.trim();
 
-  if (!a || !b || !c || !d || !id) {
+  if (!id) {
     alert("Please fill all fields including Qubit Name.");
     return;
   }
