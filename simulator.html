@@ -180,6 +180,7 @@ function addQubitToUI(id, aReal, aImag, bReal, bImag) {
     <p><strong>Alpha:</strong> ${aReal} + ${aImag}i</p>
     <p><strong>Beta:</strong> ${bReal} + ${bImag}i</p>
     <button class="delete-btn">Delete</button>
+    <button class="delete-btn">Uncollapse</button>
   `;
 
   // Add the delete button functionality
@@ -188,6 +189,20 @@ function addQubitToUI(id, aReal, aImag, bReal, bImag) {
     deleteQubit(id, qubitDiv);
   });
 
+const uncollapseButton = qubitDiv.querySelector('.uncollapse-btn');
+uncollapseButton.addEventListener('click', () => {
+  fetch("https://qube-simulator.onrender.com/uncollapse-qubit", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: id })
+  })
+  .then(res => res.text())
+  .then(data => appendLog(data))
+  .catch(err => appendLog("Error uncollapsing: " + err.message));
+});
+
+
+  
   // Add click event for selecting the qubit
   qubitDiv.addEventListener('click', () => {
     selectQubit(id, aReal, aImag, bReal, bImag);
