@@ -338,7 +338,7 @@ document.getElementById('clear-log-btn').addEventListener('click', () => {
 
   <!-- Your main dashboard content -->
   <div class="container">
-    <h2>Quantum Circut Simulator</h2>
+    <h2>Quantum Circuit Simulator</h2>
 
   <button id="btn-add-qubit" class="btn-add">Add qubit</button>
   <button id="btn-confirm" class="btn-add" disabled>Confirm list</button>
@@ -427,7 +427,7 @@ document.getElementById('clear-log-btn').addEventListener('click', () => {
 
     document.getElementById('btn-exec').onclick = () => {
       const payload = { qubits, gates: workspace };
-      fetch('https://qube-simulator.onrender.com/execute-circut', {
+      fetch('https://qube-simulator.onrender.com/execute-circuit', {
         method: 'POST',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(payload)
