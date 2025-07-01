@@ -175,14 +175,16 @@ function addQubitToUI(id, aReal, aImag, bReal, bImag) {
   qubitDiv.classList.add("qubit-item");
   qubitDiv.setAttribute("data-id", id); // Set the data-id attribute for identification
 
-  qubitDiv.innerHTML = `
-    <p><strong>Qubit Name:</strong> ${id}</p>
-    <p><strong>Alpha:</strong> ${aReal} + ${aImag}i</p>
-    <p><strong>Beta:</strong> ${bReal} + ${bImag}i</p>
-    <button class="delete-btn delete-button">Delete</button>
-<button class="delete-btn uncollapse-btn">Uncollapse</button>
+qubitDiv.innerHTML = `
+  <div class="qubit-col"><p><strong>Qubit Name:</strong> ${id}</p></div>
+  <div class="qubit-col"><p><strong>Alpha:</strong> ${aReal} + ${aImag}i</p></div>
+  <div class="qubit-col"><p><strong>Beta:</strong> ${bReal} + ${bImag}i</p></div>
+  <div class="qubit-col qubit-actions">
+    <button class="delete-btn">Delete</button>
+    <button class="delete-btn uncollapse-btn">Uncollapse</button>
+  </div>
+`;
 
-  `;
 
   // Add the delete button functionality
   const deleteButton = qubitDiv.querySelector('.delete-btn');
