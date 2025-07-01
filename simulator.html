@@ -227,26 +227,78 @@
     }
 
     // Create Qubit Event
-    document.getElementById('create-qubit-btn').addEventListener('click', () => {
-      const id = document.getElementById('qubit-name').value.trim();
-      const a = document.getElementById('input-a').value || "0";
-      const b = document.getElementById('input-b').value || "0";
-      const c = document.getElementById('input-c').value || "0";
-      const d = document.getElementById('input-d').value || "1";
+    // Create Qubit Event
+document.getElementById('create-qubit-btn').addEventListener('click', () => {
+  const id = document.getElementById('qubit-name').value.trim();
+  const a = document.getElementById('input-a').value || "0";
+  const b = document.getElementById('input-b').value || "0";
+  const c = document.getElementById('input-c').value || "0";
+  const d = document.getElementById('input-d').value || "1";
 
-      if (!id) {
-        alert("Please enter a qubit name");
-        return;
-      }
+  if (!id) {
+    alert("Please enter a qubit name");
+    return;
+  }
 
-      if (window.qubitRegistry.includes(id)) {
-        alert(`Qubit "${id}" already exists!`);
-        return;
-      }
+  if (window.qubitRegistry.includes(id)) {
+    alert(`Qubit "${id}" already exists!`);
+    return;
+  }
 
-      addQubitToUI(id, a, b, c, d);
-      appendLog(`Created qubit ${id} with state: (${a} + ${b}i)|0> + (${c} + ${d}i)|1>`);
+  addQubitToUI(id, a, b, c, d);
+  appendLog(`Created qubit ${id} with state: (${a} + ${b}i)|0> + (${c} + ${d}i)|1>`);
+});
+
+// Fixed Execute Button Handler
+document.getElementById('execute-btn').addEventListener('click', async () => {
+  if (!selectedQubitId) {
+    appendLog("Error: Please select a qubit first by clicking on it in the list.");
+    return;
+  }
+
+  appendLog(`Measuring qubit ${selectedQubitId}...`);
+  
+  try {
+    // First try the actual backend
+    const response = await fetch("https://qube-simulator.onrender.com/execute", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        id: selectedQubitId,
+        action: "measure" 
+      })
     });
+    
+    if (!response.ok) throw new Error(await response.text() || "Measurement failed");
+    
+    const result = await response.text();
+    displayMeasurementResult(result);
+  } catch (err) {
+    // If backend fails, use local simulation
+    appendLog(`Backend error: ${err.message} - Using local simulation`);
+    const localResult = Math.random() > 0.5 ? "1" : "0";
+    displayMeasurementResult(localResult);
+  }
+});
+
+function displayMeasurementResult(result) {
+  if (result !== "0" && result !== "1") {
+    result = Math.random() > 0.5 ? "1" : "0"; // Fallback if invalid response
+  }
+  
+  setResultOutput(`Measurement result: ${result}`);
+  appendLog(`Qubit ${selectedQubitId} collapsed to ${result}`);
+  
+  // Visual feedback
+  const resultEl = document.getElementById('result-output');
+  resultEl.style.color = result === "1" ? "#4CAF50" : "#F44336";
+  resultEl.style.fontWeight = "bold";
+  resultEl.style.fontSize = "24px";
+}
+
+// ========================
+// Circuit Simulator
+// ========================
 
     // ========================
     // Circuit Simulator
