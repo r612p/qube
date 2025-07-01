@@ -102,10 +102,10 @@ const outputEl = document.getElementById('output');
 const qubitListEl = document.getElementById('qubit-list1');
 let selectedQubitId = null;  // store ID
 document.getElementById('create-qubit-btn').addEventListener('click', () => {
-  const a = document.getElementById('input-a').value.trim();
-  const b = document.getElementById('input-b').value.trim();
-  const c = document.getElementById('input-c').value.trim();
-  const d = document.getElementById('input-d').value.trim();
+  const a = 0;
+  const b = 0;
+  const c = 0;
+  const d = 1;
   const id = document.getElementById('qubit-name').value.trim();
 
   if (!a || !b || !c || !d || !id) {
