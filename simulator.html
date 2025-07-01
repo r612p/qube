@@ -292,7 +292,7 @@
 
     document.getElementById('btn-exec').onclick = () => {
       const payload = { qubits, gates: workspace };
-      fetch('https://qube-simulator.onrender.com/execute-circuit', {
+      fetch('https://qube-simulator.onrender.com/execute-circut', {
         method: 'POST',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(payload)
