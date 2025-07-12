@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QUBE | Research</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <script>
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
+  </script>
+
+  <main class="page-content">
+    <section>
+      <h2>Quantum Research</h2>
+      <p>Explore our team’s latest research into quantum algorithms, entanglement simulations, and noise mitigation techniques.</p>
+    </section>
+  </main>
+</body>
+</html>

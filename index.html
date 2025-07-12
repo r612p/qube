@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUBE</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Placeholder -->
+  <div id="header-placeholder"></div>
+
+  <!-- Inject header.html here -->
+ <!-- Load header and update auth button -->
+<script>
+  fetch("header.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("header-placeholder").innerHTML = data;
+
+      // Firebase auth check (wait briefly for header to render)
+      firebase.auth().onAuthStateChanged(user => {
+        const authLink = document.getElementById("authLink");
+        const authBtn = document.getElementById("authBtn");
+
+        if (authLink && authBtn) {
+          if (user) {
+            authLink.href = "dashboard.html";
+            authBtn.textContent = "Dashboard";
+          } else {
+            authLink.href = "login.html";
+            authBtn.textContent = "Log In";
+          }
+        }
+      });
+    });
+</script>
+
+      
+      <div class="top-section">
+        <section class="quantum-blurb fade-in-left">
+            <div class="blurb-content">
+              <h2>Learn Quantum Computing Today</h2>
+              <p class="blurb-description">With the help of our QUBE Java Quantum Simulator</p> <!-- ← new line added -->
+              <div class="blurb-buttons">
+                <a href="login.html">
+                    <button class="signup-btn">Sign Up</button>
+                  </a>
+                <a href="login.html">
+                    <button class="login-btn">Log In</button>
+                  </a>
+              </div>
+            </div>
+          </section>
+      
+        <div class="right-image fade-in-left">
+          <img src="quamtumcomputer.png" alt="Quantum Computing Illustration" />
+        </div>
+      </div>
+
+      <section class="news-section">
+        <div class="news-container">
+          <h3 class="news-label">News:</h3>
+          <div class="news-grid">
+            <div class="news-card">
+              <img src="researchppr.png" alt="News 1">
+              <h4>Quantum Research Paper</h4>
+            </div>
+            <div class="news-card">
+              <img src="updatecode.png" alt="News 2">
+              <h4>Simulator Update Released</h4>
+            </div>
+            <div class="news-card">
+              <img src="whatinworldcode.png" alt="News 3">
+              <h4>Sign Up on our Waitlist</h4>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+
+      <div class="bottom-section">
+        <section class="quantum-blurb mirrored-blurb fade-in-right">
+          <div class="blurb-content">
+            <h2>Try Our Online Integrated Qubit Circut Simulator!</h2>
+            <p class="blurb-description">Still Work in Progress, Supports Multiple Qubits, Circuts, and a Wide Variety of Single Qubit Quantum Gates</p>
+            <div class="blurb-buttons">
+              <button class="trynow-btn">Try Now</button>
+              <button class="updatelog-btn">Update Log</button>
+            </div>
+          </div>
+        </section>
+      
+        <div class="left-image fade-in-right">
+          <img src="whatisthis2.png" alt="Different Quantum Illustration" />
+        </div>
+      </div>
+      
+      <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, {
+      threshold: 0.5 // adjust as needed for when it should trigger
+    });
+
+    document.querySelectorAll('.fade-in-right').forEach(el => {
+      observer.observe(el);
+    });
+  });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, {
+      threshold: 0.5 // adjust as needed for when it should trigger
+    });
+
+    document.querySelectorAll('.fade-in-left').forEach(el => {
+      observer.observe(el);
+    });
+  });
+
+</script>
+
+
+    <main>
+     
+        <section id="resources">
+            <h2>Helpful Resources</h2>
+            <ul>
+                <li><a href="https://quantum-computing.ibm.com/">IBM Quantum</a></li>
+                <li><a href="https://qiskit.org/">Qiskit</a></li>
+                <li><a href="https://arxiv.org/">arXiv.org</a> - research papers</li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Email: <a href="mailto:QubeSupport@googlegroups.com">QubeSupport@googlegroups.com</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Quantum Research Team</p>
+    </footer>
+
+
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<header>
+    <div class="header-container">
+      <!-- LEFT GROUP -->
+      <div class="left-group">
+        <a href="index.html">
+            <img src="mrqube.png" alt="Logo" class="logo" /></a>        
+          <h1>QUBE</h1>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="simulator.html">Simulator</a></li>
+            <li><a href="donate.html">Donate</a></li>
+          </ul>
+        </nav>
+      </div>
+  
+      <!-- RIGHT GROUP -->
+      <div class="right-group">
+        <input type="search" class="search-bar" placeholder="Search..." />
+        <a href="login.html" id="authLink">
+  <button class="sign-in" id="authBtn">Log In</button>
+</a>
+
+
+      </div>
+    </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  fetch("header.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("header-placeholder").innerHTML = data;
+
+    // NOW run Firebase Auth logic
+    const auth = firebase.auth();
+    auth.onAuthStateChanged(user => {
+      const authBtn = document.getElementById('authBtn');
+      const authLink = document.getElementById('authLink');
+
+      if (authBtn && authLink) {
+        if (user) {
+          authBtn.textContent = "Dashboard";
+          authLink.href = "dashboard.html";
+        } else {
+          authBtn.textContent = "Log In";
+          authLink.href = "login.html";
+        }
+      }
+    });
+  });
+
+</script>
+
+
+    </header>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QUBE | Login</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB794_xhBGp4BTo5ufdv06AKZZ6gczsvLQ",
+      authDomain: "qube-f0452.firebaseapp.com",
+      projectId: "qube-f0452",
+      storageBucket: "qube-f0452.appspot.com",
+      messagingSenderId: "241392091913",
+      appId: "1:241392091913:web:dfc43ac9129ff75c4789d8",
+      measurementId: "G-5V1JYVBWJQ"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <script>
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
+  </script>
+
+  <main class="page-content">
+    <section>
+      <h2>Login to QUBE</h2>
+      
+      <!-- ✅ Google Login Button -->
+      <button id="googleLoginBtn">Login with Google</button>
+
+      <!-- ✅ Show user info after login -->
+      <div id="userInfo" style="display:none;">
+        <p id="welcomeMsg"></p>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    const loginBtn = document.getElementById('googleLoginBtn');
+    const userInfo = document.getElementById('userInfo');
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Handle login
+    loginBtn.addEventListener('click', () => {
+      auth.signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          welcomeMsg.textContent = `Welcome, ${user.displayName}`;
+          userInfo.style.display = 'block';
+          loginBtn.style.display = 'none';
+        })
+        .catch(error => {
+          console.error("Login failed:", error);
+        });
+    });
+
+    // Handle logout
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => {
+        userInfo.style.display = 'none';
+        loginBtn.style.display = 'inline-block';
+      });
+    });
+
+    //9 Auto-detect login state (refresh-safe)
+    auth.onAuthStateChanged(user => {
+  if (user) {
+    // Redirect logged-in users to dashboard
+    window.location.href = "dashboard.html";
+  } else {
+    // User is signed out — show login UI
+    welcomeMsg.textContent = "";
+    userInfo.style.display = 'none';
+    loginBtn.style.display = 'inline-block';
+  }
+});
+
+  </script>
+</body>
+</html>

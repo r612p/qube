@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QUBE Simulator</title>
+  <link rel="stylesheet" href="simulator.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <style>
+    /* Tab and Base Styles */
+   
+    .glow {
+      box-shadow: 0 0 10px #4af;
+    }
+    #log-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .qubit-item {
+      background: #f5f5f5;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .qubit-col {
+      flex: 1;
+      min-width: 150px;
+    }
+    .param-display {
+      font-family: monospace;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="grid-bg"></div>
+
+  <!-- Single Qubit Section -->
+<div id="single-qubit" class="section">
+
+    <div class="container1">
+      <h2>Qubit Simulator</h2>
+      <div class="input-group">
+        <div>
+          <label for="qubit-name">Qubit Name (ID)</label>
+          <input type="text" id="qubit-name" placeholder="e.g. qu1" />
+        </div>
+      </div>
+<h5>Real A:
+<input type="number" id="input-a" value="1" disabled />
+Imaginary A:
+<input type="number" id="input-b" value="0" disabled />
+Real B:
+<input type="number" id="input-c" value="0" disabled />
+Imaginary B:
+<input type="number" id="input-d" value="0" disabled />
+</h5>
+<h5>Note: Number values are locked because every qubit is created with the default value, which can be changed in the circuit simulator.</h5>
+
+     
+      <div class="buttons">
+        <button id="create-qubit-btn">Create Qubit</button>
+        <button id="execute-btn">Execute</button>
+      </div>
+
+      <div id="log-container">
+        <div style="flex: 1;">
+          <h4>Execution Log</h4>
+          <div id="execution-log"></div>
+        </div>
+        <div style="flex: 1;">
+          <h4>Qubit Result</h4>
+          <div id="result-output"></div>
+        </div>
+      </div>
+
+      <button id="clear-log-btn">Clear Logs</button>
+      <h3>Created Qubits:</h3>
+      <div class="qubit-list1" id="qubit-list1"></div>
+    </div>
+  </div>
+
+ <!-- Circuit Simulator Section -->
+<div id="circuit" class="section">
+
+    <div class="container1">
+      <h2>Quantum Circuit Simulator</h2>
+      <button class="btn-add">Generate Circuit Layout</button>
+      <button id="btn-confirm" class="btn-add">Load Qubits from Registry</button>
+      <h5>Note: Generating Circuit is necessary to use circuit simulator! </h5>
+      <h4>Qubit Registry</h4>
+      <div class="added1-container">
+        <div id="qubit-list2">No qubits available. Create them in the Single Qubit tab first.</div>
+      </div>
+      
+      <div id="gate-bar">
+<span class="gate" draggable="true" data-gate="X">X</span>
+<span class="gate" draggable="true" data-gate="Y">Y</span>
+<span class="gate" draggable="true" data-gate="Z">Z</span>
+<span class="gate" draggable="true" data-gate="Hadamard">H</span>
+<span class="gate" draggable="true" data-gate="S">S</span>
+<span class="gate" draggable="true" data-gate="T">T</span>
+<span class="gate" draggable="true" data-gate="SDagger">S†</span>
+<span class="gate" draggable="true" data-gate="TDagger">T†</span>
+<span class="gate" draggable="true" data-gate="CXGateControl">CX Control</span>
+<span class="gate" draggable="true" data-gate="CXGateTarget">CX Target</span>
+<span class="gate" draggable="true" data-gate="CYGateControl">CY Control</span>
+<span class="gate" draggable="true" data-gate="CYGateTarget">CY Target</span>
+<span class="gate" draggable="true" data-gate="CZGateControl">CZ Control</span>
+<span class="gate" draggable="true" data-gate="CZGateTarget">CZ Target</span>
+<span class="gate" draggable="true" data-gate="ToffoliControl1">CCX C1</span>
+<span class="gate" draggable="true" data-gate="ToffoliControl2">CCX C2</span>
+<span class="gate" draggable="true" data-gate="ToffoliTarget">CCX T</span>
+<span class="gate" draggable="true" data-gate="SWAP1">SWAP 1</span>
+<span class="gate" draggable="true" data-gate="SWAP2">SWAP 2</span>
+      </div>
+
+      <div id="grid-container"></div>
+      <button id="btn-exec" class="btn" disabled>Execute Circuit</button>
+      <button id="uncollapse-all-btn" class="btn">Uncollapse All</button>
+
+
+      <div id="circuit-output"></div>
+    </div>
+  </div>
+
+  <script>
+    // ========================
+    // Shared Qubit Registry
+    // ========================
+    window.qubitRegistry = [];
+    let selectedQubitId = null;
+
+
+    // ========================
+    // Single Qubit Functions
+    // ========================
+    const executionLogEl = document.getElementById('execution-log');
+    const resultOutputEl = document.getElementById('result-output');
+
+    function appendLog(message) {
+      const timestamp = new Date().toLocaleString();
+      executionLogEl.textContent += `[${timestamp}] ${message}\n`;
+      executionLogEl.scrollTop = executionLogEl.scrollHeight;
+    }
+
+    function setResultOutput(message) {
+      resultOutputEl.textContent = message;
+    }
+
+    function syncQubitsToCircuitSimulator() {
+      const circuitQubitList = document.getElementById('qubit-list2');
+      circuitQubitList.innerHTML = window.qubitRegistry.length > 0 
+        ? 'Qubits: ' + window.qubitRegistry.join(', ')
+        : 'No qubits available. Create them in the Single Qubit tab first.';
+    }
+
+    function addQubitToUI(id, aReal, aImag, bReal, bImag) {
+  if (!window.qubitRegistry.includes(id)) {
+    window.qubitRegistry.push(id);
+    syncQubitsToCircuitSimulator();
+  }
+
+  const qubitDiv = document.createElement("div");
+  qubitDiv.classList.add("qubit-item");
+  qubitDiv.setAttribute("data-id", id);
+  qubitDiv.innerHTML = `
+    <div class="qubit-col"><p><strong>Qubit Name:</strong> ${id}</p></div>
+    <div class="qubit-col"><p><strong>Alpha:</strong> ${aReal} + ${aImag}i</p></div>
+    <div class="qubit-col"><p><strong>Beta:</strong> ${bReal} + ${bImag}i</p></div>
+    <div class="qubit-col qubit-actions">
+      <button class="delete-btn">Delete</button>
+      <button class="uncollapse-btn">Uncollapse</button>
+    </div>
+  `;
+
+  // DELETE button logic
+  qubitDiv.querySelector('.delete-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    deleteQubit(id, qubitDiv);
+  });
+
+  // UNCOLLAPSE button logic
+  qubitDiv.querySelector('.uncollapse-btn').addEventListener('click', (e) => {
+    e.stopPropagation(); // prevents it from triggering the selection highlight
+    fetch('https://qube-simulator.onrender.com/uncollapse-qubit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id })
+    })
+   .then(response => response.text())
+  .then(message => {
+    // Log the uncollapse message
+    appendLog(message);
+
+  })
+  .catch(error => {
+    console.error("Error uncollapsing qubit:", error);
+  });
+});
+
+
+//circuit uncollapse btn logic
+
+document.getElementById("uncollapse-all-btn").addEventListener("click", () => {
+  fetch("/uncollapse-all", { method: "POST" })
+    .then(res => res.text())
+    .then(msg => {
+      alert(msg);  // or update UI log nicely             !!!ALERT
+    })
+    .catch(console.error);
+});
+
+
+
+  // QUBIT SELECT logic
+  qubitDiv.addEventListener('click', () => {
+    selectedQubitId = id;
+    document.querySelectorAll('.qubit-item').forEach(q => q.classList.remove('glow'));
+    qubitDiv.classList.add('glow');
+  });
+
+  document.getElementById('qubit-list1').appendChild(qubitDiv);
+}
+
+
+    // Create Qubit Event
+document.getElementById('create-qubit-btn').addEventListener('click', async () => {
+  const id = document.getElementById('qubit-name').value.trim();
+
+  if (!id) {
+    alert("Please enter a qubit name");
+    return;
+  }
+
+  if (window.qubitRegistry.includes(id)) {
+    alert(`Qubit "${id}" already exists!`);
+    return;
+  }
+
+  try {
+  console.log("Payload being sent:", JSON.stringify({ id: selectedQubitId }));
+
+    
+    const response = await fetch("https://qube-simulator.onrender.com/create-qubit", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id,
+        aReal: 1,
+        aImag: 0,
+        bReal: 0,
+        bImag: 0
+      })
+    });
+
+    const result = await response.text();
+
+    if (!response.ok) throw new Error(result);
+
+    addQubitToUI(id, 1, 0, 0, 0); // Adds it to your UI
+    appendLog(result);
+  } catch (err) {
+    appendLog(`Error creating qubit ${id}: ${err.message}`);
+  }
+});
+
+
+
+
+    
+
+// execute button handler
+
+document.getElementById('execute-btn').addEventListener('click', async () => {
+  if (!selectedQubitId) {
+    appendLog("Error: Please select a qubit first by clicking on it in the list.");
+    return;
+  }
+
+  appendLog(`Measuring qubit ${selectedQubitId}...`);
+  
+  try {
+    const response = await fetch("https://qube-simulator.onrender.com/execute", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: selectedQubitId })
+    });
+
+    if (!response.ok) throw new Error(await response.text() || "Measurement failed");
+
+    const result = await response.text();
+
+    // Just show result
+    setResultOutput(`Measurement result: ${result}`);
+    appendLog(`Qubit ${selectedQubitId} collapsed to ${result}`);
+
+    // Color effect
+    const resultEl = document.getElementById('result-output');
+    resultEl.style.color = result === "1" ? "#4CAF50" : "#F44336";
+    resultEl.style.fontWeight = "bold";
+    resultEl.style.fontSize = "24px";
+    
+  } catch (err) {
+    appendLog(`Backend error: ${err.message} - Sorry! Contact us and we'll try to get it resolved ASAP.`);
+  }
+});
+function deleteQubit(id, qubitDiv) {
+  window.qubitRegistry = window.qubitRegistry.filter(q => q !== id);
+  syncQubitsToCircuitSimulator();
+  qubitDiv.remove();
+  appendLog(`Deleted qubit ${id}`);
+}
+
+
+function displayMeasurementResult(result) {
+  if (result !== "0" && result !== "1") {
+    result = "error"; // Fallback if invalid response
+  }
+  
+  setResultOutput(`Measurement result: ${result}`);
+  appendLog(`Qubit ${selectedQubitId} collapsed to ${result}`);
+  
+  // Visual feedback
+  const resultEl = document.getElementById('result-output');
+  resultEl.style.color = result === "1" ? "#4CAF50" : "#F44336";
+  resultEl.style.fontWeight = "bold";
+  resultEl.style.fontSize = "24px";
+}
+
+
+    // ========================
+    // Circuit Simulator
+    // ========================
+    let circuitQubits = [];
+    let workspace = [];
+    let confirmed = false;
+    let layers = 2;
+
+    document.getElementById('btn-confirm').addEventListener('click', () => {
+      if (window.qubitRegistry.length === 0) {
+        alert("No qubits available. Create qubits in the Single Qubit tab first!");
+        return;
+      }
+      
+      circuitQubits = [...window.qubitRegistry];
+      confirmed = true;
+      document.getElementById('qubit-list2').innerText = 'Qubits: ' + circuitQubits.join(', ');
+      buildGrid();
+    });
+
+    function buildGrid() {
+      workspace = circuitQubits.map(() => Array(layers).fill(''));
+      renderGrid();
+    }
+
+    function renderGrid() {
+      const container = document.getElementById('grid-container');
+      container.innerHTML = '';
+      const table = document.createElement('table');
+      
+      // Create header row
+      const headerRow = document.createElement('tr');
+      headerRow.innerHTML = '<th></th>' + 
+        Array.from({length: layers}, (_, i) => `<th>Layer ${i+1}</th>`).join('') +
+        `<th id="layers-add" rowspan="${circuitQubits.length+1}">+</th>`;
+      table.appendChild(headerRow);
+
+      // Create qubit rows
+      circuitQubits.forEach((qubit, r) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<th>${qubit}</th>` + 
+          workspace[r].map((gate, c) => 
+            `<td class="cell" data-r="${r}" data-c="${c}">${gate}</td>`
+          ).join('');
+        table.appendChild(row);
+      });
+
+      container.appendChild(table);
+
+      // Make cells interactive
+      container.querySelectorAll('.cell').forEach(cell => {
+        cell.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          cell.classList.add('drag-over');
+        });
+
+        cell.addEventListener('dragleave', () => {
+          cell.classList.remove('drag-over');
+        });
+
+        cell.addEventListener('drop', (e) => {
+          e.preventDefault();
+          cell.classList.remove('drag-over');
+          const gate = e.dataTransfer.getData('gate');
+          workspace[cell.dataset.r][cell.dataset.c] = gate;
+          renderGrid();
+          document.getElementById('btn-exec').disabled = false;
+        });
+      });
+
+      // Add layer button
+      document.getElementById('layers-add').addEventListener('click', () => {
+        layers++;
+        workspace.forEach(row => row.push(''));
+        renderGrid();
+      });
+    }
+
+    // Enable gate dragging
+    document.querySelectorAll('#gate-bar .gate').forEach(gate => {
+      gate.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('gate', gate.dataset.gate);
+      });
+    });
+
+    // Execute circuit
+    document.getElementById('btn-exec').addEventListener('click', () => {
+      const payload = {
+        qubits: circuitQubits,
+        gates: workspace
+      };
+
+      fetch('https://qube-simulator.onrender.com/execute-circuit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.text())
+      .then(result => {
+        document.getElementById('circuit-output').textContent = result;
+      })
+      .catch(error => {
+        document.getElementById('circuit-output').textContent = `Error: ${error.message}`;
+      });
+    });
+// see if collapsed
+
+  fetch(`/qubit/${selectedQubitId}`)
+  .then(res => res.json())
+  .then(data => {
+    if (data.collapsed) {
+      resultOutput.textContent = `Qubit collapsed to: ${data.measuredValue}`;
+    } else {
+      resultOutput.textContent = `Qubit is still in superposition`;
+    }
+  });
+
+
+fetch('https://qube-simulator.onrender.com/uncollapse-qubit', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ id: selectedQubitId })
+});
+
+
+    
+    
+    // load header
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      })
+      .catch(err => console.error("Error loading header:", err));
+  </script>
+</body>
+</html>

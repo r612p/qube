@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QUBE | Research</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <script>
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
+  </script>
+
+  <main class="page-content">
+    <section>
+      <h2>Please give us money</h2>
+      <p>We need the funds to buy a render subscription and stuff, As you can see we need money to keep our simulator running 24/7</p>
+
+      <img src="render sad poor.png" alt="we need $ for render bruh" /></a>        
+      <h2> Email us</h2>
+      <img src="actually donate.png" alt="look at the subscriptions on render they're mad expensive" /></a>  
+
+    </section>
+      
+          
+
+  </main>
+</body>
+</html>

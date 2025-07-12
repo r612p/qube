@@ -1,0 +1,414 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #1a1a2e;
+    color: #000;
+    line-height: 1.6;
+  }
+  
+  /* HEADER STRUCTURE */
+  header {
+    background-color: #1a1a2e;
+    color: white;
+    padding: 15px 20px;
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* LEFT GROUP */
+  .left-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+  }
+  
+  .logo {
+    width: 50px;
+    height: auto;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    white-space: nowrap;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    margin-left: 30px;
+    padding: 0;
+  }
+  
+  nav li {
+    padding: 10px 20px;
+    border-right: 1px solid #00f0ff;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Remove border on last item */
+  nav li:last-child {
+    border-right: none;
+  }
+  
+  /* Make the link fill the whole <li> box */
+  nav a {
+    display: block;
+    color: #00f0ff;
+    text-decoration: none;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Hover on <li> lights up the full box */
+  nav li:hover {
+    background-color: #00f0ff;
+  }
+  
+  nav li:hover a {
+    color: #1a1a2e;
+  }
+  
+  
+  
+  /* RIGHT GROUP */
+  .right-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+  
+  .search-bar {
+    padding: 6px 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: none;
+  }
+  
+  .sign-in {
+    padding: 6px 14px;
+    background-color: #00f0ff;
+    color: #1a1a2e;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .sign-in:hover {
+    background-color: #00c4cc;
+  }
+  
+
+/* Parent container */
+.top-section {
+    position: relative;
+    width: 100vw;
+    height: 65vh;
+    overflow: visible;
+    
+  }
+  
+  /* LEFT: Quantum blurb stays on top */
+  .quantum-blurb {
+    position: relative;
+    font-size: 50px;
+    padding-left: 50px;
+    z-index: 2; /* stays above the image */
+    width: 50%;
+    height: 100%;
+    background-color: #00f0ff;
+    color: #1a1a2e;
+    border-bottom-right-radius: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(131, 41, 41, 0.2);
+  }
+
+  .blurb-description {
+    text-align: left;
+    font-size: 1.1rem;
+    margin-top: 0px;                 /*I changed thhis from 10 to 0 */
+    margin-left:35px;
+    font-size: 20px;
+
+    color: #1a1a2e; /* or white if your background is dark */
+    max-width: 400px;
+    line-height: 1.4;
+  }
+  
+
+
+  /* RIGHT: background image fills right half, under the corner */
+  .right-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60vw; /* extra width so it fills behind the rounded corner */
+    height: 100%;
+    z-index: 1;  /* behind the blurb box */
+    overflow: hidden;
+  }
+  
+  .right-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* makes image fill the space while keeping aspect ratio */
+  }
+  
+  .blurb-buttons {
+    display: flex;            /* put buttons in a row */
+    justify-content: center;  /* center horizontally */
+    gap: 20px;                /* space between buttons */
+    margin-top: 20px;         /* add some space above buttons */
+    flex-wrap: nowrap;        /* prevent buttons from wrapping */
+  }
+  
+  .trynow-btn, .updatelog-btn, .signup-btn, .login-btn, .logoutBtn{
+    flex: none;               /* prevent buttons from growing/shrinking */
+    padding: 20px 48px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #1a1a2e;
+    color: #00f0ff;
+    border: none;
+
+    transition: 0.3s ease;
+  }
+  
+  .signup-btn:hover, .login-btn:hover, .logoutBtn{
+    box-shadow: 0 0 16px #e250ff;
+    transform: translateY(-5px);
+  }
+  
+
+  .trynow-btn:hover, .updatelog-btn:hover {
+    box-shadow: 0 0 16px #00f0ff;
+    transform: translateY(-5px);
+  }
+  
+
+  .news-section {
+    width: 100%;
+    background-color: #1a1a2e; /* matches nav theme */
+    padding: 40px 30px;
+    color: white;
+    margin-top: -30px; /* pull upward to overlap */
+    z-index: 5;
+    position: relative;
+  }
+  .news-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .news-label {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00f0ff; /* nav accent color */
+    white-space: nowrap;
+    padding-top: 10px;
+  }
+  
+  /* Grid of cards */
+  .news-grid {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .news-card {
+    background-color: #121220;
+    border: 1px solid #00f0ff33;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1 1 30%;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .news-card:hover {
+    box-shadow: 0 0 16px #00f0ff66;
+    transform: translateY(-5px);
+    
+  }
+  
+  .news-card img {
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .news-card h4 {
+    font-size: 1.1rem;
+    color: #00f0ff;
+  }
+  
+  .news-container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+
+  .quantum-blurb:hover,
+  .mirrored-blurb:hover {
+    box-shadow: 0 0 40px 20px #00f0ff88; /* intense glow */
+    transition: box-shadow 0.3s ease;
+    cursor: default; /* indicates it's not clickable */
+  }
+  
+
+  .quantum-blurb,
+.mirrored-blurb {
+  transition: box-shadow 0.3s ease;
+  cursor: default;
+  overflow: visible;
+}
+
+.quantum-blurb:hover{
+  box-shadow: 0 0 40px 20px #00f7ff88;
+}
+
+
+.mirrored-blurb:hover {
+  box-shadow: 0 0 40px 20px #e250ff;
+}
+
+/* Container like top-section but mirrored */
+.bottom-section {
+    position: relative;
+    width: 100vw;
+    height: 65vh;
+    margin-top: -40px;
+    overflow: visible;
+    display: flex;
+    flex-direction: row-reverse; /* flipped order: blurb right, image left */
+  }
+  
+  /* Mirrored blurb on the right */
+  .mirrored-blurb {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    background-color: #e250ff;  /* different color, e.g. coral */
+    color: #1a1a2e;
+    border-bottom-left-radius: 60px;  /* mirror corner */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 40px;
+    z-index: 2;
+    box-shadow: 0 8px 16px rgba(131, 41, 41, 0.2);
+    font-size: 40px;
+  }
+  
+  /* Left side image (mirrored) */
+  .left-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60vw; /* same width as original’s right image */
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .left-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Optional: Adjust blurb content text alignment */
+  .mirrored-blurb .blurb-content {
+    text-align: left;
+  }
+  
+  /* Optional: keep blurb description consistent */
+  .mirrored-blurb .blurb-description {
+    margin-left: 35px;
+  }
+  
+
+
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 45px;
+}
+
+section {
+    margin-bottom: 40px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #ddd;
+    color: #444;
+    border-top: 1px solid #ccc;
+}
+
+/* Hidden state */
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s ease-out;
+}
+
+/* Visible state on scroll */
+.fade-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* Hidden state */
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s ease-out;
+}
+
+/* Visible state on scroll */
+.fade-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
