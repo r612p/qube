@@ -446,15 +446,19 @@ function displayMeasurementResult(result) {
     });
 // see if collapsed
 
+  if (selectedQubitId) { // 👈 this is the null check
   fetch(`/qubit/${selectedQubitId}`)
-  .then(res => res.json())
-  .then(data => {
-    if (data.collapsed) {
-      resultOutput.textContent = `Qubit collapsed to: ${data.measuredValue}`;
-    } else {
-      resultOutput.textContent = `Qubit is still in superposition`;
-    }
-  });
+    .then(res => res.json())
+    .then(data => {
+      // do something with the data
+    })
+    .catch(error => {
+      console.error("Fetch failed:", error);
+    });
+} else {
+  console.warn("selectedQubitId is null or undefined — fetch was skipped.");
+}
+
 
 
 fetch('https://qube-simulator.onrender.com/uncollapse-qubit', {
