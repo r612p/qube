@@ -209,12 +209,16 @@ Imaginary B:
 //circuit uncollapse btn logic
 
 document.getElementById("uncollapse-all-btn").addEventListener("click", () => {
-  fetch("/uncollapse-all", { method: "POST" })
+  fetch("https://qube-simulator.onrender.com/uncollapse-all", {
+    method: "POST"
+  })
     .then(res => res.text())
     .then(msg => {
-      alert(msg);  // or update UI log nicely             !!!ALERT
+      alert(msg);  // or log it somewhere else if preferred
     })
-    .catch(console.error);
+    .catch(error => {
+      console.error("Failed to uncollapse all:", error);
+    });
 });
 
 
