@@ -1,0 +1,126 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+
+  body {
+    font-family: 'Ramabhadra', sans-serif;
+    background-color: #1a1a2e;
+    color: #000;
+    line-height: 1.6;
+    
+  }
+  
+
+  
+  /* HEADER STRUCTURE */
+  header {
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 20px 25px;
+    width: 100%; /* viewport width */
+    box-sizing: border-box;
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* LEFT GROUP */
+  .left-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+  }
+  
+  .logo {
+    width: 50px;
+    height: auto;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    white-space: nowrap;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    margin-left: 30px;
+    padding: 0;
+  }
+  
+  nav li {
+    padding: 10px 20px;
+    border-right: 1px solid #ffffff;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Remove border on last item */
+  nav li:last-child {
+    border-right: none;
+  }
+  
+  /* Make the link fill the whole <li> box */
+  nav a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Hover on <li> lights up the full box */
+  nav li:hover {
+    background-color: #ffffff;
+  }
+  
+  nav li:hover a {
+    color: #1a1a2e;
+  }
+  
+  
+  
+  /* RIGHT GROUP */
+  .right-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+  
+  .search-bar {
+    padding: 6px 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: none;
+  }
+  
+  .sign-in {
+    padding: 6px 14px;
+    background-color: #ffffff;
+    color: #1a1a2e;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .sign-in:hover {
+    background-color: #00c4cc;
+  }
+  
