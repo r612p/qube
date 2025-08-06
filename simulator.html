@@ -37,6 +37,11 @@
     }
   </style>
 </head>
+  <div class="tab-container" style="display:flex;gap:10px;margin:20px;">
+  <button class="tab-button active" data-tab="single-qubit">Qubits</button>
+  <button class="tab-button" data-tab="circuit">Circuit</button>
+  <button class="tab-button" data-tab="algorithms">Algorithms</button>
+</div>
 <body>
   <div id="header-placeholder"></div>
   <div class="grid-bg"></div>
@@ -129,7 +134,12 @@ Imaginary B:
       <div id="circuit-output"></div>
     </div>
   </div>
-
+  <div id="algorithms" class="section" style="display:none;">
+    <div class="container1">
+      <h2>Quantum Algorithms</h2>
+      <p>This section will demonstrate algorithms like Shor's and Grover's. Coming soon!</p>
+    </div>
+  </div>
   <script>
     // ========================
     // Shared Qubit Registry
@@ -459,6 +469,19 @@ function displayMeasurementResult(result) {
   console.warn("selectedQubitId is null or undefined — fetch was skipped.");
 }
 
+// Tab switching logic
+document.querySelectorAll('.tab-button').forEach(button => {
+  button.addEventListener('click', () => {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    
+    // Show the selected section
+    const tabId = button.dataset.tab;
+    document.getElementById(tabId).style.display = 'block';
+    button.classList.add('active');
+  });
+});
 
 
 
