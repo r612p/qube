@@ -37,10 +37,31 @@
     }
     .tab-container {
   display: flex;
-  justify-content: center; /* centers horizontally */
+  justify-content: center; /* Centers horizontally */
   gap: 10px;
-  margin: 20px auto;       /* centers container itself */
-  width: fit-content;      /* shrink to content size */
+  margin: 20px auto; /* Centers the container */
+  padding: 10px;
+  background: #f8f9fa; /* Light background (optional) */
+  border-radius: 8px; /* Rounded corners (optional) */
+  width: fit-content; /* Shrink to fit content */
+}
+
+.tab-button {
+  padding: 10px 20px;
+  border: none;
+  background: #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tab-button.active {
+  background: #4CAF50; /* Green for active tab */
+  color: white;
+}
+
+.tab-button:hover {
+  background: #d0d0d0;
 }
 
   </style>
