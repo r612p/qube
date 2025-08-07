@@ -168,7 +168,26 @@ Imaginary B:
   <div id="algorithms" class="section" style="display:none;">
     <div class="container1">
       <h2>Quantum Algorithms</h2>
-      <p>This section will demonstrate algorithms like Shor's and Grover's. Coming soon!</p>
+      <div class="algo-section">
+  <h3>Shor's Algorithm (Factorization)</h3>
+  <label for="shor-input">Enter a number to factor:</label>
+  <input type="number" id="shor-input" placeholder="e.g. 91" />
+  <button id="shor-run">Run Shor’s Algorithm</button>
+  <div id="shor-result" class="algo-output"></div>
+</div>
+
+<hr>
+
+<div class="algo-section">
+  <h3>Grover's Algorithm (Search)</h3>
+  <label for="grover-n">Search Space Size (N):</label>
+  <input type="number" id="grover-n" placeholder="e.g. 8" />
+  <label for="grover-target">Target Value (0–N-1):</label>
+  <input type="number" id="grover-target" placeholder="e.g. 3" />
+  <button id="grover-run">Run Grover’s Algorithm</button>
+  <div id="grover-result" class="algo-output"></div>
+</div>
+
     </div>
   </div>
   <script>
@@ -516,7 +535,53 @@ document.querySelectorAll('.tab-button').forEach(button => {
 
 
 
-    
+    // SHOR'S ALGORITHM
+document.getElementById('shor-run').addEventListener('click', () => {
+  const N = parseInt(document.getElementById('shor-input').value.trim());
+
+  if (isNaN(N) || N <= 1) {
+    alert("Please enter a number greater than 1.");
+    return;
+  }
+
+  fetch('https://qube-simulator.onrender.com/simulate-shor', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ N })
+  })
+  .then(res => res.text())
+  .then(result => {
+    document.getElementById('shor-result').textContent = result;
+  })
+  .catch(err => {
+    document.getElementById('shor-result').textContent = `Error: ${err.message}`;
+  });
+});
+
+// GROVER'S ALGORITHM
+document.getElementById('grover-run').addEventListener('click', () => {
+  const N = parseInt(document.getElementById('grover-n').value.trim());
+  const target = parseInt(document.getElementById('grover-target').value.trim());
+
+  if (isNaN(N) || isNaN(target) || N <= 1 || target < 0 || target >= N) {
+    alert("Please enter a valid N and target where 0 <= target < N.");
+    return;
+  }
+
+  fetch('https://qube-simulator.onrender.com/simulate-grover', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ N, target })
+  })
+  .then(res => res.text())
+  .then(result => {
+    document.getElementById('grover-result').textContent = result;
+  })
+  .catch(err => {
+    document.getElementById('grover-result').textContent = `Error: ${err.message}`;
+  });
+});
+
     
     // load header
     fetch("header.html")
