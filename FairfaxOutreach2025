@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About QUBE</title>
+  <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+  <style>
+    .about-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .about-container h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #222;
+    }
+    .about-container p {
+      margin-bottom: 16px;
+    }
+    .about-container ul {
+      margin: 20px 0;
+      padding-left: 20px;
+    }
+    .about-container li {
+      margin-bottom: 10px;
+    }
+    .team-section {
+      margin-top: 40px;
+      border-top: 1px solid #ddd;
+      padding-top: 30px;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .team-member {
+      text-align: center;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .team-member h4 {
+      margin: 10px 0 5px;
+    }
+    .team-member p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+ <div class="grid-bg"></div>
+  <!-- Inject header.html here -->
+  <script>
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
+  </script>
+
+  <!-- Main Content -->
+  <main class="about-container">
+    <h2>Inspiring Young Minds at Jim Scott Community Center</h2>
+    <p>
+      This summer, our team visited the Jim Scott Community Center to host an engaging 
+            lesson on quantum physics, quantum computing, and the fundamentals of classical 
+            computing. The students there explored the building blocks of technology by learning how bits 
+            work and also playing an interactive binary game. They also got deep into science 
+            through the famous double slit experiment, sparking curiosity about the mysteries 
+            of quantum mechanics. The session was filled with energy, questions, and discovery, 
+            leaving participants excited about the possibilities of science in the future.</p>
+<!-- add images (format them!) here -->
+  </main>
+
+  <footer>
+    <p>&copy; 2025 QUBE Quantum Research Team &mdash; <a href="contact.html">Contact Us</a></p>
+  </footer>
+
+</body>
+</html>
