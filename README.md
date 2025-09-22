@@ -1,6 +1,6 @@
 # QUBE
 
-QUBE is an interactive quantum computing learning platform designed to help students, educators, and enthusiasts explore the fundamentals of quantum mechanics and quantum computing through simulation. It provides both a dashboard for qubit management and a drag-and-drop circuit builder for experimenting with quantum gates and algorithms. Visit our website to get started: [r612p.github.io/qube/](r612p.github.io/qube/).
+QUBE is an interactive quantum computing learning platform designed to help students, educators, and enthusiasts explore the fundamentals of quantum mechanics and quantum computing through simulation. It provides both a dashboard for qubit management and a drag-and-drop circuit builder for experimenting with quantum gates and algorithms. Visit our website to get started: [https://r612p.github.io/qube/](https://r612p.github.io/qube/).
 
 
 ---
@@ -43,5 +43,6 @@ QUBE is an interactive quantum computing learning platform designed to help stud
 - **Visualization**: State vector and Bloch sphere displays.
 
 ---
+
 
 
